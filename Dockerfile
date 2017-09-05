@@ -80,7 +80,7 @@ ADD build.properties.j2 $GTS_HOME/
 ADD config.conf.j2 $GTS_HOME/
 
 ADD my_config.sh /etc/my_init.d/
-RUN mkdir /etc/service/opengts/
+RUN mkdir -p /etc/service/opengts/
 ADD run.sh /etc/service/opengts/run
 
 
