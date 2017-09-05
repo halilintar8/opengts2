@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER mcsaky <mihai.csaky@sysop-consulting.ro>
 
 # Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
+CMD ["/sbin/init"]
 
 
 # Set the debconf frontend to Noninteractive
@@ -79,7 +79,7 @@ ADD tomcat-users.xml /usr/local/apache-tomcat-$TOMCAT_VERSION/conf/
 ADD build.properties.j2 $GTS_HOME/
 ADD config.conf.j2 $GTS_HOME/
 
-ADD my_config.sh /etc/my_init.d/
+ADD my_config.sh /etc/init.d/
 RUN mkdir -p /etc/service/opengts/
 ADD run.sh /etc/service/opengts/run
 
