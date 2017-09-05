@@ -11,7 +11,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 
 ENV GTS_HOME /usr/local/gts
 ENV CATALINA_HOME /usr/local/tomcat
-ENV GTS_VERSION 2.6.3
+ENV GTS_VERSION 2.6.4
 ENV TOMCAT_VERSION 8.0.35
 ENV JAVA_HOME /usr/local/java
 ENV ORACLE_JAVA_HOME /usr/lib/jvm/java-8-oracle/
@@ -22,6 +22,7 @@ ENV ORACLE_JAVA_HOME /usr/lib/jvm/java-8-oracle/
 RUN \
   echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
+  apt-get update && \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get install -y oracle-java8-installer
