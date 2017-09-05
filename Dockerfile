@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER mcsaky <mihai.csaky@sysop-consulting.ro>
 
 # Use baseimage-docker's init system.
-CMD ["/sbin/init"]
+# CMD ["/sbin/init"]
 
 
 # Set the debconf frontend to Noninteractive
@@ -99,7 +99,5 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # expose ports
 EXPOSE 5001-5120 8080 8082 8090 9000
-
-#CMD ["/usr/local/tomcat/bin/run.sh"]
-
+CMD ["/usr/local/tomcat/bin/run.sh"]
 
