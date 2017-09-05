@@ -23,6 +23,8 @@ RUN \
   echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
   apt-get update && \
+  apt-get install -y python-software-properties && \
+  apt-get install -y software-properties-common && \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get install -y oracle-java8-installer
@@ -32,7 +34,7 @@ RUN ln -s $ORACLE_JAVA_HOME $JAVA_HOME
 
 #install additional software
 #RUN apt-get -y install libmysql-java  liblog4j1.2-java libgnumail-java
-RUN apt-get -y install ant curl unzip sudo tar vim gconf2 software-properties-common python-software-properties python-jinja2 python-pip jq
+RUN apt-get -y install ant curl unzip sudo tar vim gconf2 python-jinja2 python-pip jq
 RUN pip install j2cli
 
 # get  opengts
