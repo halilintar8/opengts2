@@ -11,7 +11,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 
 ENV GTS_HOME /usr/local/gts
 ENV CATALINA_HOME /usr/local/tomcat
-ENV GTS_VERSION 2.6.3
+ENV GTS_VERSION 2.6.4
 ENV TOMCAT_VERSION 8.0.35
 ENV JAVA_HOME /usr/local/java
 ENV ORACLE_JAVA_HOME /usr/lib/jvm/java-8-oracle/
@@ -74,15 +74,11 @@ RUN rm -rf /usr/local/tomcat/webapps/examples /usr/local/tomcat/webapps/docs
 RUN useradd -d $GTS_HOME -s /bin/bash opengts
 RUN chown -R opengts:opengts $GTS_HOME; chown -R opengts:opengts /usr/local/OpenGTS_$GTS_VERSION; chown -R opengts:opengts /usr/local/tomcat/
 
-# expose ports
-EXPOSE 8080
-
 
 #add required external files
 ADD tomcat-users.xml /usr/local/apache-tomcat-$TOMCAT_VERSION/conf/
 ADD build.properties.j2 $GTS_HOME/
 ADD config.conf.j2 $GTS_HOME/
-
 
 ADD my_config.sh /etc/my_init.d/
 RUN mkdir /etc/service/opengts/
@@ -90,4 +86,7 @@ ADD run.sh /etc/service/opengts/run
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# expose ports
+EXPOSE 5001-5120 8080 8082 8090 9000
 
