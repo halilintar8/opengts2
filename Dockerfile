@@ -1,9 +1,9 @@
-FROM phusion/baseimage:0.9.18
+FROM phusion/baseimage
 
 MAINTAINER mcsaky <mihai.csaky@sysop-consulting.ro>
 
 # Use baseimage-docker's init system.
-#CMD ["/sbin/my_init"]
+CMD ["/sbin/my_init"]
 
 
 # Set the debconf frontend to Noninteractive
@@ -11,8 +11,8 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 
 ENV GTS_HOME /usr/local/gts
 ENV CATALINA_HOME /usr/local/tomcat
-ENV GTS_VERSION 2.6.4
-ENV TOMCAT_VERSION 8.0.35
+ENV GTS_VERSION 2.6.5
+ENV TOMCAT_VERSION 8.5.29
 ENV JAVA_HOME /usr/local/java
 ENV ORACLE_JAVA_HOME /usr/lib/jvm/java-8-oracle/
 
@@ -52,7 +52,8 @@ RUN curl -L http://archive.apache.org/dist/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/
 RUN  tar zxf /usr/local/tomcat.tar.gz -C /usr/local && rm /usr/local/tomcat.tar.gz && ln -s /usr/local/apache-tomcat-$TOMCAT_VERSION $CATALINA_HOME
 
 #put java.mail in place
-RUN curl -L http://java.net/projects/javamail/downloads/download/javax.mail.jar -o $GTS_HOME/jlib/javamail/javax.mail.jar
+#RUN curl -L http://java.net/projects/javamail/downloads/download/javax.mail.jar -o $GTS_HOME/jlib/javamail/javax.mail.jar
+RUN curl -L https://github.com/javaee/javamail/releases/download/JAVAMAIL-1_6_0/javax.mail.jar -o /usr/local/OpenGTS_$GTS_VERSION/jlib/javamail/javax.mail.jar
 
 # put mysql.java in place
 RUN curl -L http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.31.tar.gz  -o $GTS_HOME/jlib/jdbc.mysql/mysql-connector-java-5.1.31.tar.gz && \
@@ -74,11 +75,15 @@ RUN rm -rf /usr/local/tomcat/webapps/examples /usr/local/tomcat/webapps/docs
 RUN useradd -d $GTS_HOME -s /bin/bash opengts
 RUN chown -R opengts:opengts $GTS_HOME; chown -R opengts:opengts /usr/local/OpenGTS_$GTS_VERSION; chown -R opengts:opengts /usr/local/tomcat/
 
+# expose ports
+EXPOSE 8080
+
 
 #add required external files
 ADD tomcat-users.xml /usr/local/apache-tomcat-$TOMCAT_VERSION/conf/
 ADD build.properties.j2 $GTS_HOME/
 ADD config.conf.j2 $GTS_HOME/
+
 
 ADD my_config.sh /etc/my_init.d/
 RUN mkdir /etc/service/opengts/
@@ -86,10 +91,4 @@ ADD run.sh /etc/service/opengts/run
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# expose ports
-EXPOSE 5001-5120 8080 8082 8090 9000
-
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
 
