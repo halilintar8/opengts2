@@ -12,6 +12,12 @@ j2  $GTS_HOME/config.conf.j2 > $GTS_HOME/config.conf
 sed -i 's/\/\/\*\*\/ public void setWriteListener(WriteListener wl) {\/\*NO-OP\*\/}/public void setWriteListener(WriteListener wl) {\/\*NO-OP\*\/}/g' $GTS_HOME/src/org/opengts/war/tools/BufferedHttpServletResponse.java
 
 
+#vi ./src/org/opengts/war/maps/jsmap/OpenLayers.java
+#boolean seaOverlay = rtp.getBoolean(PROP_OPENSEAMAP_showOverlay,true);
+
+sed -i 's/boolean seaOverlay = rtp.getBoolean(PROP_OPENSEAMAP_showOverlay,false)/boolean seaOverlay = rtp.getBoolean(PROP_OPENSEAMAP_showOverlay,true)/g' $GTS_HOME/src/org/opengts/war/maps/jsmap/OpenLayers.java
+
+
 cd $GTS_HOME; ant all
 cp $GTS_HOME/build/*.war $CATALINA_HOME/webapps/
 
@@ -24,4 +30,9 @@ do
 done
 # create sysadmin account
 $GTS_HOME/bin/admin.pl Account -account=sysadmin -pass=$SYSADMIN_PASSWORD -create;
+
+apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoremove -y
+apt install vim -y
+cd $GTS_HOME; bash sampleData/loadSampleData.sh
+ant all && ant track.deploy && ant gprmc.deploy && ant events.deploy
 
