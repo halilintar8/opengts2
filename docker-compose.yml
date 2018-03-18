@@ -1,8 +1,8 @@
 version: '2'
 services:
  opengts:
-  build: ../opengts
-  container_name: opengts
+  build: ../opengts2
+  container_name: opengts3
   ports:
    - 8080:8080
   environment:
@@ -27,7 +27,7 @@ services:
    - MYSQL_USER=gts
    - MYSQL_PASSWORD=opengts
    - CREATE_DATABASE=true
-  container_name: mysql
+  container_name: mysql3
   ports:
    - 3306:3306
   #environment:

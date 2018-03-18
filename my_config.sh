@@ -25,6 +25,3 @@ done
 # create sysadmin account
 $GTS_HOME/bin/admin.pl Account -account=sysadmin -pass=$SYSADMIN_PASSWORD -create;
 
-
-
-
