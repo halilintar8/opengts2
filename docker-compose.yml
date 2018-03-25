@@ -1,6 +1,8 @@
 version: '2'
 services:
  opengts:
+  depends_on:
+   - mysql
   build: ../opengts2
   container_name: opengts3
   ports:
@@ -29,7 +31,7 @@ services:
    - CREATE_DATABASE=true
   container_name: mysql3
   ports:
-   - 3306:3306
+   - 3306
   #environment:
   # - MYSQL_ROOT_PASSWORD=mysqlroot
   # - MYSQL_DBNAME=gts
