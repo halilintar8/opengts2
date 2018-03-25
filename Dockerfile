@@ -89,10 +89,6 @@ ADD my_config.sh /etc/my_init.d/
 RUN mkdir /etc/service/opengts/
 ADD run.sh /etc/service/opengts/run
 
-apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoremove -y
-apt install vim -y
-cd $GTS_HOME; bash sampleData/loadSampleData.sh
-ant all && ant track.deploy && ant gprmc.deploy && ant events.deploy
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
