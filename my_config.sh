@@ -17,6 +17,7 @@ sed -i 's/\/\/\*\*\/ public void setWriteListener(WriteListener wl) {\/\*NO-OP\*
 
 sed -i 's/boolean seaOverlay = rtp.getBoolean(PROP_OPENSEAMAP_showOverlay,false)/boolean seaOverlay = rtp.getBoolean(PROP_OPENSEAMAP_showOverlay,true)/g' $GTS_HOME/src/org/opengts/war/maps/jsmap/OpenLayers.java
 
+sed -i 's/protected static final String  URL_http                     = "http"/protected static final String  URL_http                     = "https"/g' $GTS_HOME/src/org/opengts/geocoder/google/GoogleGeocodeV3.java
 
 cd $GTS_HOME; ant all
 cp $GTS_HOME/build/*.war $CATALINA_HOME/webapps/
