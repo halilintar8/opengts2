@@ -8,6 +8,7 @@ services:
   ports:
    - 8080:8080
    - 5050:5050
+   - 5055:5055
   environment:
    - MYSQL_ROOT_PASSWORD=mysqlroot
    - MYSQL_DBNAME=gts

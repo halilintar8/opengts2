@@ -22,11 +22,10 @@
     <entry key='database.driver'>com.mysql.jdbc.Driver</entry>
     <entry key='database.url'>jdbc:mysql://172.18.0.2:3306/gts?allowMultiQueries=true</entry>
     <entry key='database.user'>root</entry>
-    <!-- <entry key='database.password'>GtsSecretPassword</entry> -->
     <entry key='database.password'>mysqlroot</entry>
 
  	
-<entry key='database.selectDevices'>
+<entry key='database.selectDevicesAll'>
     SELECT CONCAT('1', imeiNumber) AS id, imeiNumber AS uniqueId FROM Device WHERE imeiNumber REGEXP '^[0-9]+$';
 </entry>
 
@@ -43,11 +42,9 @@
 	<!-- 
 	
     <entry key='database.changelog'>/opt/traccar/schema/changelog-master.xml</entry>
-
     <entry key='database.selectServers'>
         SELECT * FROM server;
     </entry>
-
     <entry key='database.updateServer'>
         UPDATE server SET
         registration = :registration,
@@ -64,26 +61,21 @@
         attributes = :attributes
         WHERE id = :id;
     </entry>
-
     <entry key='database.loginUser'>
         SELECT * FROM users
         WHERE email = :email;
     </entry>
-
     <entry key='database.selectUser'>
         SELECT * FROM users
         WHERE id = :id;
     </entry>
-
     <entry key='database.selectUsersAll'>
         SELECT * FROM users;
     </entry>
-
     <entry key='database.insertUser'>
         INSERT INTO users (name, email, hashedPassword, salt, admin, map, distanceUnit, speedUnit, latitude, longitude, zoom, twelveHourFormat, attributes)
         VALUES (:name, :email, :hashedPassword, :salt, :admin, :map, :distanceUnit, :speedUnit, :latitude, :longitude, :zoom, :twelveHourFormat, :attributes);
     </entry>
-
     <entry key='database.updateUser'>
         UPDATE users SET
         name = :name,
@@ -99,119 +91,91 @@
         attributes = :attributes
         WHERE id = :id;
     </entry>
-
     <entry key='database.updateUserPassword'>
         UPDATE users SET hashedPassword = :hashedPassword, salt = :salt WHERE id = :id;
     </entry>
-
     <entry key='database.deleteUser'>
         DELETE FROM users WHERE id = :id;
     </entry>
-
     <entry key='database.selectDevicePermissions'>
         SELECT userId, deviceId FROM user_device;
     </entry>
-
     <entry key='database.selectGroupPermissions'>
         SELECT userId, groupId FROM user_group;
     </entry>
-
     <entry key='database.selectDevicesAll'>
         SELECT * FROM devices;
     </entry>
-
     <entry key='database.insertDevice'>
         INSERT INTO devices (name, uniqueId, groupId, attributes) VALUES (:name, :uniqueId, :groupId, :attributes);
     </entry>
-
     <entry key='database.updateDevice'>
         UPDATE devices SET name = :name, uniqueId = :uniqueId, groupId = :groupId, attributes = :attributes WHERE id = :id;
     </entry>
-
     <entry key='database.updateDeviceStatus'>
         UPDATE devices SET lastUpdate = :lastUpdate WHERE id = :id;
     </entry>
-
     <entry key='database.deleteDevice'>
         DELETE FROM devices WHERE id = :id;
     </entry>
-
     <entry key='database.linkDevice'>
         INSERT INTO user_device (userId, deviceId) VALUES (:userId, :deviceId);
     </entry>
-
     <entry key='database.unlinkDevice'>
         DELETE FROM user_device WHERE userId = :userId AND deviceId = :deviceId;
     </entry>
-
     <entry key='database.selectGroupsAll'>
         SELECT * FROM groups;
     </entry>
-
     <entry key='database.insertGroup'>
         INSERT INTO groups (name, groupId, attributes) VALUES (:name, :groupId, :attributes);
     </entry>
-
     <entry key='database.updateGroup'>
         UPDATE groups SET name = :name, groupId = :groupId, attributes = :attributes WHERE id = :id;
     </entry>
-
     <entry key='database.deleteGroup'>
         DELETE FROM groups WHERE id = :id;
     </entry>
-
     <entry key='database.linkGroup'>
         INSERT INTO user_group (userId, groupId) VALUES (:userId, :groupId);
     </entry>
-
     <entry key='database.unlinkGroup'>
         DELETE FROM user_group WHERE userId = :userId AND groupId = :groupId;
     </entry>
-
     <entry key='database.selectPositions'>
         SELECT * FROM positions WHERE deviceId = :deviceId AND fixTime BETWEEN :from AND :to ORDER BY fixTime;
     </entry>
-
     <entry key='database.insertPosition'>
         INSERT INTO positions (deviceId, protocol, serverTime, deviceTime, fixTime, valid, latitude, longitude, altitude, speed, course, address, attributes)
         VALUES (:deviceId, :protocol, :now, :deviceTime, :fixTime, :valid, :latitude, :longitude, :altitude, :speed, :course, :address, :attributes);
     </entry>
-
     <entry key='database.selectLatestPositions'>
         SELECT * FROM positions WHERE id IN (SELECT positionId FROM devices);
     </entry>
-
     <entry key='database.updateLatestPosition'>
         UPDATE devices SET positionId = :id WHERE id = :deviceId;
     </entry>
-
     <entry key='database.selectEvent'>
         SELECT * FROM events WHERE id = :id;
     </entry>
-
     <entry key='database.insertEvent'>
         INSERT INTO events (type, serverTime, deviceId, positionId, geofenceId, attributes)
         VALUES (:type, :serverTime, :deviceId, :positionId, :geofenceId, :attributes);
     </entry>
-
     <entry key='database.selectEvents'>
         SELECT * FROM events WHERE deviceId = :deviceId AND type LIKE :type AND serverTime BETWEEN :from AND :to ORDER BY serverTime DESC;
     </entry>
-
     <entry key='database.selectGeofence'>
         SELECT * FROM geofences
         WHERE id = :id;
     </entry>
-
     <entry key='database.selectGeofencesAll'>
         SELECT * FROM geofences;
     </entry>
-
     <entry key='database.insertGeofence'>
         INSERT INTO geofences (name, description, area, attributes)
         VALUES (:name, :description, :area, :attributes);
     </entry>
-
     <entry key='database.updateGeofence'>
         UPDATE geofences SET
         name = :name,
@@ -220,56 +184,43 @@
         attributes = :attributes
         WHERE id = :id;
     </entry>
-
     <entry key='database.deleteGeofence'>
         DELETE FROM geofences WHERE id = :id;
     </entry>
-
     <entry key='database.selectGeofencePermissions'>
         SELECT userId, geofenceId FROM user_geofence;
     </entry>
-
     <entry key='database.linkGeofence'>
         INSERT INTO user_geofence (userId, geofenceId) VALUES (:userId, :geofenceId);
     </entry>
-
     <entry key='database.unlinkGeofence'>
         DELETE FROM user_geofence WHERE userId = :userId AND geofenceId = :geofenceId;
     </entry>
-
     <entry key='database.selectGroupGeofences'>
         SELECT groupId, geofenceId FROM group_geofence;
     </entry>
-
     <entry key='database.linkGroupGeofence'>
         INSERT INTO group_geofence (groupId, geofenceId) VALUES (:groupId, :geofenceId);
     </entry>
-
     <entry key='database.unlinkGroupGeofence'>
         DELETE FROM group_geofence WHERE groupId = :groupId AND geofenceId = :geofenceId;
     </entry>
-
     <entry key='database.selectDeviceGeofences'>
         SELECT deviceId, geofenceId FROM device_geofence;
     </entry>
-
     <entry key='database.linkDeviceGeofence'>
         INSERT INTO device_geofence (deviceId, geofenceId) VALUES (:deviceId, :geofenceId);
     </entry>
-
     <entry key='database.unlinkDeviceGeofence'>
         DELETE FROM device_geofence WHERE deviceId = :deviceId AND geofenceId = :geofenceId;
     </entry>
-
     <entry key='database.selectNotifications'>
         SELECT * FROM notifications;
     </entry>
-
     <entry key='database.insertNotification'>
         INSERT INTO notifications (userId, type, attributes)
         VALUES (:userId, :type, :attributes);
     </entry>
-
     <entry key='database.updateNotification'>
         UPDATE notifications SET
         userId = :userId,
@@ -277,11 +228,9 @@
         attributes = :attributes
         WHERE id = :id;
     </entry>
-
     <entry key='database.deleteNotification'>
         DELETE FROM notifications WHERE id = :id;
     </entry>
-
     <entry key='database.deletePositions'>
         DELETE FROM positions WHERE serverTime &lt; :serverTime AND id NOT IN (SELECT positionId FROM devices);
     </entry> 
@@ -414,5 +363,4 @@
     <entry key='cradlepoint.port'>5118</entry>
 
 </properties>
-
 
