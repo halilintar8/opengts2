@@ -20,9 +20,10 @@
     <!-- DATABASE CONFIG -->
 
     <entry key='database.driver'>com.mysql.jdbc.Driver</entry>
-    <entry key='database.url'>jdbc:mysql://172.17.0.2:3306/gts?allowMultiQueries=true</entry>
+    <entry key='database.url'>jdbc:mysql://172.18.0.2:3306/gts?allowMultiQueries=true</entry>
     <entry key='database.user'>root</entry>
-    <entry key='database.password'>GtsSecretPassword</entry>
+    <!-- <entry key='database.password'>GtsSecretPassword</entry> -->
+    <entry key='database.password'>mysqlroot</entry>
 
  	
 <entry key='database.selectDevices'>
