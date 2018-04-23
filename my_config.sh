@@ -34,6 +34,6 @@ $GTS_HOME/bin/admin.pl Account -account=sysadmin -pass=$SYSADMIN_PASSWORD -creat
 
 apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoremove -y
 apt install vim -y
-cd $GTS_HOME; bash sampleData/loadSampleData.sh
-ant all && ant track.deploy && ant gprmc.deploy && ant events.deploy
+#cd $GTS_HOME; bash sampleData/loadSampleData.sh
+#ant all && ant track.deploy && ant gprmc.deploy && ant events.deploy
 

@@ -76,7 +76,7 @@ RUN useradd -d $GTS_HOME -s /bin/bash opengts
 RUN chown -R opengts:opengts $GTS_HOME; chown -R opengts:opengts /usr/local/OpenGTS_$GTS_VERSION; chown -R opengts:opengts /usr/local/tomcat/
 
 # expose ports
-EXPOSE 8080
+EXPOSE 31200 5001-5120 8080 8082 8090 9000
 
 
 #add required external files
@@ -88,6 +88,17 @@ ADD config.conf.j2 $GTS_HOME/
 ADD my_config.sh /etc/my_init.d/
 RUN mkdir /etc/service/opengts/
 ADD run.sh /etc/service/opengts/run
+
+RUN mkdir /usr/local/traccar/ 
+ADD traccar-linux-64-3.7.zip /usr/local/traccar/
+RUN cd /usr/local/traccar/  && unzip traccar-linux-64-3.7.zip && ./traccar.run
+RUN cd /opt/traccar/conf/ && mv traccar.xml traccar.xml.asli
+ADD traccar.xml /opt/traccar/conf/
+#RUN /opt/traccar/bin/traccar start
+
+#RUN cd $GTS_HOME && bash sampleData/loadSampleData.sh
+#RUN cd /usr/local/gts/
+#RUN ant all && ant track.deploy && ant gprmc.deploy && ant events.deploy
 
 
 # Clean up APT when done.
